@@ -31,15 +31,12 @@ class Poker {
     const hands = this.removeNonPairsOrTrios(...arr)
     if (hands.length === 0) return hands
 
-    const pairs = []
-    const trios = []
+    const [pairs, trios] = [[], []]
     for (const hand of hands) {
       hand.length === 2 ? pairs.push(hand) : trios.push(hand)
     }
-
-    if (trios.length > 0) return this.findBest(trios) // If there are trios, return the best.
-
-    return this.findBest(pairs) // Otherwise return the best pair.
+    // If there are trios, return the best. Otherwise return best pair.
+    return trios.length > 0 ? this.findBest(trios) : this.findBest(pairs)
   }
 
   isPairOrTrio (hand) {
