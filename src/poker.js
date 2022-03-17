@@ -1,5 +1,3 @@
-class Poker {
-  // Write your implementation here
-}
+class Poker {}
 
-module.exports = Poker
+module.exports = Poker;
