@@ -31,25 +31,19 @@ class Poker {
     if (
       convertedPlayer1[0] !== convertedPlayer1[1] &&
       convertedPlayer2[0] !== convertedPlayer2[1]
-    ) {
+    )
       return [];
-    } else if (
+    if (
       convertedPlayer1[0] === convertedPlayer1[1] &&
       convertedPlayer2[0] !== convertedPlayer2[1]
-    ) {
+    )
       return player1;
-    } else if (
+    if (
       convertedPlayer1[0] !== convertedPlayer1[1] &&
       convertedPlayer2[0] === convertedPlayer2[1]
-    ) {
+    )
       return player2;
-    } else {
-      if (convertedPlayer1[0] > convertedPlayer2[0]) {
-        return player1;
-      } else {
-        return player2;
-      }
-    }
+    return convertedPlayer1[0] > convertedPlayer2[0] ? player1 : player2;
   }
 }
 
