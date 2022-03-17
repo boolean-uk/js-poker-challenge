@@ -5,14 +5,19 @@ class Poker {
       if (Number(card)) {
         cardsInNumbers.push(Number(card));
       } else {
-        if (card === "A") {
-          cardsInNumbers.push(1);
-        } else if (card === "J") {
-          cardsInNumbers.push(11);
-        } else if (card === "Q") {
-          cardsInNumbers.push(12);
-        } else if (card === "K") {
-          cardsInNumbers.push(13);
+        switch (card) {
+          case "A":
+            cardsInNumbers.push(1);
+            break;
+          case "J":
+            cardsInNumbers.push(11);
+            break;
+          case "Q":
+            cardsInNumbers.push(12);
+            break;
+          case "K":
+            cardsInNumbers.push(13);
+            break;
         }
       }
     }
