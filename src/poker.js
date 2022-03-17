@@ -1,8 +1,9 @@
 class Poker {
-  //convert the letters (A, J, Q, K) to numbers and make all strings to numbers
-  convertLettersToNumbers(cards) {
-    const cardsInNumbers = [];
+  //convert the letters (J, Q, K, A) to numbers and make all strings to numbers
+  // When there are multiple arrays in an array, combine it into one array
+  lettersToNumbers(cards) {
     const cardsCombined = cards.flat();
+    const cardsInNumbers = [];
     for (let card of cardsCombined) {
       if (Number(card)) {
         cardsInNumbers.push(Number(card));
@@ -26,6 +27,7 @@ class Poker {
     return cardsInNumbers;
   }
 
+  //convert the numbers back to letters and make them into strings
   numbersToLetters(cards) {
     const cardsInLetters = [];
 
@@ -51,8 +53,8 @@ class Poker {
   }
 
   winningPair(player1, player2) {
-    const convertedPlayer1 = this.convertLettersToNumbers(player1);
-    const convertedPlayer2 = this.convertLettersToNumbers(player2);
+    const convertedPlayer1 = this.lettersToNumbers(player1);
+    const convertedPlayer2 = this.lettersToNumbers(player2);
 
     // If there are no pairs, return an empty array
     return convertedPlayer1[0] !== convertedPlayer1[1] &&
@@ -73,19 +75,23 @@ class Poker {
   }
 
   winningPairFromArray(players) {
-    const convertedPlayers = this.convertLettersToNumbers(players);
+    const convertedPlayers = this.lettersToNumbers(players);
     const cardsArr = [];
+    // Go through the entire array and check if every two cards are a pair
     for (let i = 0; i < convertedPlayers.length; i += 2) {
       if (convertedPlayers[i] === convertedPlayers[i + 1]) {
         cardsArr.push(convertedPlayers[i]);
         cardsArr.push(convertedPlayers[i + 1]);
       }
     }
+    // Sort the cards from the smallest to biggest
     cardsArr.sort((a, b) => {
       return a - b;
     });
 
-    return this.numbersToLetters(cardsArr.slice(cardsArr.length - 2));
+    // Return the last two index as they are the biggest pair and convert them into string
+    const winningPair = cardsArr.slice(cardsArr.length - 2);
+    return this.numbersToLetters(winningPair);
   }
 }
 
