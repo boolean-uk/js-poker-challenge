@@ -1,20 +1,9 @@
 class Poker {
   winningPair (arr1, arr2) {
-    // here i check for no matches.
-    if (arr1[0] !== arr1[1] && arr2[0] !== arr2[1]) {
-      return []
-    }
-    // i used these objects for storing values, and i am going to compare them later.
-    const firstSet = {
-      values: [],
-      match: false,
-      rank: 0
-    }
-    const secondSet = {
-      values: [],
-      match: false,
-      rank: 0
-    }
+    const cardA = arr1[0]
+    const cardB = arr1[1]
+    const cardC = arr2[0]
+    const cardD = arr2[1]
     const ranks = [
       '2',
       '3',
@@ -30,33 +19,28 @@ class Poker {
       'K',
       'A'
     ]
-    // here i am checking if the pair is in arr1 or arr2 and updating the objects above
-    if (arr1[0] === arr1[1]) {
-      firstSet.values = arr1
-      firstSet.match = true
-      firstSet.rank = ranks.indexOf(arr1[0])
+    // if no pair return empty array
+    if (cardA !== cardB && cardC !== cardD) {
+      return []
     }
+    // if pair in arr1 then return arr1
+    if (cardA === cardB) {
+      return arr1
+    }
+    // if pair in arr2 then return arr2
+    if (cardC === cardD) {
+      return arr2
+    }
+    // if both arrays are a pair then return the highest one
+    const cardArank = ranks.indexOf(cardA)
+    const cardCrank = ranks.indexOf(cardC)
 
-    if (arr2[0] === arr2[1]) {
-      secondSet.values = arr2
-      secondSet.match = true
-      secondSet.rank = ranks.indexOf(arr2[0])
-    }
-    // here i am comparing the two objects and return the value of that object
-    if (firstSet.match === true && secondSet.match === false) {
-      return firstSet.values
-    }
-
-    if (firstSet.match === false && secondSet.match === true) {
-      return secondSet.values
-    }
-    // if both arrays have pairs then the greatest wins.
-    if (firstSet.rank > secondSet.rank) {
-      return firstSet.values
-    }
-
-    if (secondSet.rank > firstSet.rank) {
-      return secondSet.values
+    if (cardA === cardB && cardC === cardD) {
+      if (cardArank > cardCrank) {
+        return cardA
+      } else {
+        return cardC
+      }
     }
   }
 }
