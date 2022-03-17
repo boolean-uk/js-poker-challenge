@@ -68,14 +68,17 @@ class Poker {
   winning3CardHand(outerArray) {
     let returnArray = [];
 
-    for (let outerElement of outerArray) {
+    for (let element of outerArray) {
+      if (element[0] === element[1] && element[1] === element[2]) {
+        return element;
+      }
       let score = 0;
-      for (let innerElement of outerElement) {
+      for (let innerElement of element) {
         score += this.scoreMap[innerElement];
       }
       returnArray.push(score);
     }
-    console.log("returnArray", returnArray);
+
     return outerArray[returnArray.indexOf(Math.max(...returnArray))];
   }
 }
