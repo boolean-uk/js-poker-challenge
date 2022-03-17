@@ -36,22 +36,13 @@ class Poker {
 
     const pairs = []
     const trios = []
-    for (let i = 0; i < hands.length; i++) {
-      if (hands[i].length === 2) {
-        pairs.push(hands[i])
-        continue
-      }
-      if (hands[i].length === 3) {
-        trios.push(hands[i])
-        continue
-      }
+    for (const hand of hands) {
+      hand.length === 2 ? pairs.push(hand) : trios.push(hand)
     }
 
-    if (trios.length > 0) {
-      return this.findBest(trios)
-    }
+    if (trios.length > 0) return this.findBest(trios) // If there are trios, return the best.
 
-    return this.findBest(pairs)
+    return this.findBest(pairs) // Otherwise return the best pair.
   }
 
   isPairOrTrio (hand) {
@@ -62,9 +53,7 @@ class Poker {
   removeNonPairs (...params) {
     const hands = Array.from(arguments)
     for (let i = hands.length - 1; i >= 0; i--) {
-      if (!this.isPairOrTrio(hands[i])) {
-        hands.splice(i, 1)
-      }
+      if (!this.isPairOrTrio(hands[i])) hands.splice(i, 1)
     }
     return hands
   }
@@ -72,9 +61,7 @@ class Poker {
   removeNonPairsOrTriosFromArray (arr) {
     const hands = arr
     for (let i = hands.length - 1; i >= 0; i--) {
-      if (!this.isPairOrTrio(hands[i])) {
-        hands.splice(i, 1)
-      }
+      if (!this.isPairOrTrio(hands[i])) hands.splice(i, 1)
     }
     return hands
   }
@@ -82,9 +69,7 @@ class Poker {
   findBest (arr) {
     let best = arr[0]
     for (let i = 1; i < arr.length; i++) {
-      if (scoreBoard[arr[i][0]] > scoreBoard[best[0]]) {
-        best = arr[i]
-      }
+      if (scoreBoard[arr[i][0]] > scoreBoard[best[0]]) best = arr[i]
     }
     return best
   }
