@@ -6,6 +6,7 @@
 
 class Poker {
   constructor(array) {
+    this.example = [];
     this.array = array;
     this.scoreMap = {
       1: 1,
@@ -57,16 +58,36 @@ class Poker {
       return array[returnArray.indexOf(Math.max(...returnArray))];
     }
   }
+  //   = [
+  //   ["5", "5", "3"],
+  //   ["A", "A"],
+  //   ["7", "7", "7"],
+  //   ["Q", "J", "9"]
+  // ]
+
+  winning3CardHand(outerArray) {
+    let returnArray = [];
+
+    for (let outerElement of outerArray) {
+      let score = 0;
+      for (let innerElement of outerElement) {
+        score += this.scoreMap[innerElement];
+      }
+      returnArray.push(score);
+    }
+    console.log("returnArray", returnArray);
+    return outerArray[returnArray.indexOf(Math.max(...returnArray))];
+  }
 }
 module.exports = Poker;
 
 const hand = new Poker();
 console.log(
-  hand.winningPairFromArray([
-    ["4", "3"],
-    ["6", "6"],
-    ["7", "7"],
-    ["3", "3"]
+  hand.winning3CardHand([
+    ["5", "5", "3"],
+    ["A", "A"],
+    ["7", "7", "7"],
+    ["Q", "J", "9"]
   ])
 );
 
