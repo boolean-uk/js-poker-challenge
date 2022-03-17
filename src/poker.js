@@ -28,22 +28,18 @@ class Poker {
     const convertedPlayer1 = this.convertLettersToNumbers(player1);
     const convertedPlayer2 = this.convertLettersToNumbers(player2);
 
-    if (
-      convertedPlayer1[0] !== convertedPlayer1[1] &&
+    return convertedPlayer1[0] !== convertedPlayer1[1] &&
       convertedPlayer2[0] !== convertedPlayer2[1]
-    )
-      return [];
-    if (
-      convertedPlayer1[0] === convertedPlayer1[1] &&
-      convertedPlayer2[0] !== convertedPlayer2[1]
-    )
-      return player1;
-    if (
-      convertedPlayer1[0] !== convertedPlayer1[1] &&
-      convertedPlayer2[0] === convertedPlayer2[1]
-    )
-      return player2;
-    return convertedPlayer1[0] > convertedPlayer2[0] ? player1 : player2;
+      ? []
+      : convertedPlayer1[0] === convertedPlayer1[1] &&
+        convertedPlayer2[0] !== convertedPlayer2[1]
+      ? player1
+      : convertedPlayer1[0] !== convertedPlayer1[1] &&
+        convertedPlayer2[0] === convertedPlayer2[1]
+      ? player2
+      : convertedPlayer1[0] > convertedPlayer2[0]
+      ? player1
+      : player2;
   }
 }
 
