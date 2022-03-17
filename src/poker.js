@@ -93,6 +93,41 @@ class Poker {
     const winningPair = cardsArr.slice(cardsArr.length - 2);
     return this.numbersToLetters(winningPair);
   }
+
+  winning3CardHand(players) {
+    const cardsArr = [];
+
+    // push the cards array if all the elements are the same
+    for (let cards of players) {
+      if (cards.every((card) => card === cards[0])) cardsArr.push(cards);
+    }
+
+    // combine the arrays and convert letters to numbers
+    const cardsCombined = cardsArr.flat();
+    const convertedCards = this.lettersToNumbers(cardsCombined);
+
+    // Sort the cards from the smallest to biggest
+    convertedCards.sort((a, b) => {
+      return a - b;
+    });
+
+    //filter the numbers that has the biggest value
+    const winning3Cards = convertedCards.filter(
+      (num) => convertedCards[convertedCards.length - 1] === num
+    );
+
+    return this.numbersToLetters(winning3Cards);
+  }
 }
 
-module.exports = Poker;
+// module.exports = Poker;
+
+const poker = new Poker();
+console.log(
+  poker.winning3CardHand([
+    ["5", "5", "3"],
+    ["A", "A"],
+    ["7", "7", "7"],
+    ["Q", "J", "9"],
+  ])
+);
