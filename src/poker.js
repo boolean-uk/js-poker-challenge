@@ -20,28 +20,14 @@ class Poker {
     const hands = this.removeNonPairs(hand1, hand2)
     if (hands.length === 0) return hands
 
-    let biggestPair = hands[0]
-    for (let i = 1; i < hands.length; i++) {
-      if (scoreBoard[hands[i][0]] > scoreBoard[biggestPair[0]]) {
-        biggestPair = hands[i]
-      }
-    }
-
-    return biggestPair
+    return this.findBest(hands)
   }
 
   winningPairFromArray (arr) {
     const hands = this.removeNonPairsOrTriosFromArray(arr)
     if (hands.length === 0) return hands
 
-    let biggestPair = hands[0]
-    for (let i = 1; i < hands.length; i++) {
-      if (scoreBoard[hands[i][0]] > scoreBoard[biggestPair[0]]) {
-        biggestPair = hands[i]
-      }
-    }
-
-    return biggestPair
+    return this.findBest(hands)
   }
 
   winning3CardHand (arr) {
@@ -61,24 +47,11 @@ class Poker {
       }
     }
 
-    let biggestHand
     if (trios.length > 0) {
-      biggestHand = trios[0]
-      for (let i = 1; i < trios.length; i++) {
-        if (scoreBoard[trios[i][0]] > scoreBoard[biggestHand[0]]) {
-          biggestHand = trios[i]
-        }
-      }
-      return biggestHand
+      return this.findBest(trios)
     }
 
-    biggestHand = pairs[0]
-    for (let i = 1; i < pairs.length; i++) {
-      if (scoreBoard[pairs[i][0]] > scoreBoard[biggestHand[0]]) {
-        biggestHand = pairs[i]
-      }
-    }
-    return biggestHand
+    return this.findBest(pairs)
   }
 
   isPairOrTrio (hand) {
@@ -104,6 +77,16 @@ class Poker {
       }
     }
     return hands
+  }
+
+  findBest (arr) {
+    let best = arr[0]
+    for (let i = 1; i < arr.length; i++) {
+      if (scoreBoard[arr[i][0]] > scoreBoard[best[0]]) {
+        best = arr[i]
+      }
+    }
+    return best
   }
 }
 module.exports = Poker
