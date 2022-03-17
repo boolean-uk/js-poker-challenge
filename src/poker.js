@@ -41,11 +41,40 @@ class Poker {
       return array2;
     }
   }
+
+  winningPairFromArray(array) {
+    let returnArray = [];
+    for (let element of array) {
+      if (element[0] !== element[1]) {
+        returnArray.push(0);
+      } else if (element[0] === element[1]) {
+        returnArray.push(this.scoreMap[element[0]] + this.scoreMap[element[1]]);
+      }
+    }
+    if (returnArray.reduce((x, y) => x + y, 0) === 0) {
+      return [];
+    } else {
+      return array[returnArray.indexOf(Math.max(...returnArray))];
+    }
+  }
 }
 module.exports = Poker;
 
 const hand = new Poker();
-console.log(hand.winningPair(["K", "3"], ["K", "K"]));
+console.log(
+  hand.winningPairFromArray([
+    ["4", "3"],
+    ["6", "6"],
+    ["7", "7"],
+    ["3", "3"]
+  ])
+);
+
+// console.log("returnArray.....", returnArray);
+//     console.log(
+//       "index of winner......",
+//       returnArray.indexOf(Math.max(...returnArray))
+//     );
 
 // if (Array.isArray(array) && array.length === 1) {
 //   if (array[0][0] !== array[0][1] && array[1][0] !== array[1][1]) {
