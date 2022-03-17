@@ -16,18 +16,15 @@ const scoreBoard = {
 }
 
 class Poker {
-  winningPair (hand1, hand2) {
-    const hands = this.removeNonPairsOrTrios(hand1, hand2)
+  winningPair (...params) {
+    const hands = this.removeNonPairsOrTrios(...params)
     if (hands.length === 0) return hands
 
     return this.findBest(hands)
   }
 
   winningPairFromArray (arr) {
-    const hands = this.removeNonPairsOrTrios(...arr)
-    if (hands.length === 0) return hands
-
-    return this.findBest(hands)
+    return this.winningPair(...arr)
   }
 
   winning3CardHand (arr) {
