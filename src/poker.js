@@ -1,18 +1,18 @@
 class Poker {
   convertLettersToNumbers(cards) {
     const cardsInNumbers = [];
-    for (let i = 0; i < cards.length; i++) {
-      if (Number(cards[i])) {
-        cardsInNumbers.push(Number(cards[i]));
+    for (let card of cards) {
+      if (Number(card)) {
+        cardsInNumbers.push(Number(card));
       } else {
-        if (cards[i] === "A") {
+        if (card === "A") {
           cardsInNumbers.push(1);
-        } else if (cards[i] === "J") {
+        } else if (card === "J") {
           cardsInNumbers.push(11);
-        } else if (cards[i] === "Q") {
+        } else if (card === "Q") {
           cardsInNumbers.push(12);
-        } else if (cards[i] === "K") {
-          return cardsInNumbers.push(13);
+        } else if (card === "K") {
+          cardsInNumbers.push(13);
         }
       }
     }
