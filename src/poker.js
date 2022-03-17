@@ -17,21 +17,21 @@ const scoreBoard = {
 
 class Poker {
   winningPair (hand1, hand2) {
-    const hands = this.removeNonPairs(hand1, hand2)
+    const hands = this.removeNonPairsOrTrios(hand1, hand2)
     if (hands.length === 0) return hands
 
     return this.findBest(hands)
   }
 
   winningPairFromArray (arr) {
-    const hands = this.removeNonPairsOrTriosFromArray(arr)
+    const hands = this.removeNonPairsOrTrios(...arr)
     if (hands.length === 0) return hands
 
     return this.findBest(hands)
   }
 
   winning3CardHand (arr) {
-    const hands = this.removeNonPairsOrTriosFromArray(arr)
+    const hands = this.removeNonPairsOrTrios(...arr)
     if (hands.length === 0) return hands
 
     const pairs = []
@@ -50,16 +50,8 @@ class Poker {
     return hand.size === 1
   }
 
-  removeNonPairs (...params) {
-    const hands = Array.from(arguments)
-    for (let i = hands.length - 1; i >= 0; i--) {
-      if (!this.isPairOrTrio(hands[i])) hands.splice(i, 1)
-    }
-    return hands
-  }
-
-  removeNonPairsOrTriosFromArray (arr) {
-    const hands = arr
+  removeNonPairsOrTrios (...params) {
+    const hands = params
     for (let i = hands.length - 1; i >= 0; i--) {
       if (!this.isPairOrTrio(hands[i])) hands.splice(i, 1)
     }
