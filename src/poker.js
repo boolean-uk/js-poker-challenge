@@ -34,12 +34,26 @@ class Poker {
     return biggestPair
   }
 
+  winningPairFromArray (arr) {
+    const hands = this.removeNonPairsFromArray(arr)
+    if (hands.length === 0) return hands
+
+    let biggestPair = hands[0]
+    for (let i = 1; i < hands.length; i++) {
+      if (scoreBoard[hands[i][0]] > scoreBoard[biggestPair[0]]) {
+        biggestPair = hands[i]
+      }
+    }
+
+    return biggestPair
+  }
+
   isPair (hand) {
     hand = new Set(hand)
     return hand.size === 1
   }
 
-  removeNonPairs () {
+  removeNonPairs (...params) {
     const hands = Array.from(arguments)
     for (let i = hands.length - 1; i >= 0; i--) {
       if (!this.isPair(hands[i])) {
@@ -48,5 +62,16 @@ class Poker {
     }
     return hands
   }
+
+  removeNonPairsFromArray (arr) {
+    const hands = arr
+    for (let i = hands.length - 1; i >= 0; i--) {
+      if (!this.isPair(hands[i])) {
+        hands.splice(i, 1)
+      }
+    }
+    return hands
+  }
 }
+
 module.exports = Poker
