@@ -1,19 +1,23 @@
 class Poker {
- constructor(poker) {
-    this.card1 = card1;
-    this.card2= card2;
+  winningPair(player1, player2) {
+    if (player1[0] !== player1[1] && player2[0] !== player2[1]) {
+      return [];
+    } else if (player1[0] === player1[1] && player2[0] !== player2[1]) {
+      return player1;
+    } else if (player1[0] !== player1[1] && player2[0] === player2[1]) {
+      return player2;
+    } else {
+      if (player1[0] > player2[0]) {
+        return player1;
+      } else {
+        return player2;
+      }
+    }
   }
-
-
-let poker = new Poker()
-poker.winningPair(['Q', '6'], ['J', 'K']) // => []
-
-let poker = new Poker()
-poker.winningPair(['9', '9'], ['7', '7']) // => ['9', '9']
-
-let poker = new Poker()
-poker.winningPair(['K', '3'], ['K', 'K']) // => ['K', 'K']
-  
-
-
+}
+// class Poker {
+//   winningPair(h1, h2) {
+//     return [];
+//   }
+// }
 module.exports = Poker;
