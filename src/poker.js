@@ -1,35 +1,108 @@
-// Input: 2 arrays of strings, each with 2 iteams
-// Output: One array
-
-// Check if both iteams in array are the same
-// If they are, it's a pair
-// If not, it's not a pair
-// If neither of the arrays have pairs, return []
-// If one of the arrays has a pair, return that pair
-
-// If both of the arrays has pairs, figure out which pair scores higher
-// Check every card in an array against some kind of point value
-// Do that for both arrays, compare the total score
-// then return the array with the highest score
-
-// const pointMap = {
-//   Card2: 2,
-//   Card3: 3,
-//   Card4: 4,
-//   Card5: 5,
-//   Card6: 6,
-//   Card7: 7,
-//   Card8: 8,
-//   Card9: 9,
-//   Card10: 10,
-//   CardJack: 11,
-//   CardQueen: 12,
-//   CardKing: 13,
-//   CardAce: 14
-// }
+const pointMap = {
+  2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10, J: 11, Q: 12, K: 13, A: 14
+}
+// 1) Indentation
+// 2) If statement for loops, functions need {} before the code inside them
+// 3) Don't worry about lots of functions. Get code working then extract to other functions after
 
 class Poker {
-  // Write your implementation here
+  winningPair (handOne, handTwo) {
+  // cardHands: ['A', 'A'], ['3', 'K']
+    const handOneIsPair = this.isPairCheck(handOne) // ['A', 'A'] = true, because is pair
+    const handTwoIsPair = this.isPairCheck(handTwo) // ['3', 'K'] = false, because is not a pair
+    console.log('handOne = ', handOne, handOneIsPair)
+    console.log('handTwo = ', handTwo, handTwoIsPair)
+
+    // if handOne && handTwo are both false return []
+
+    if (!handOneIsPair && !handTwoIsPair) { return [] }
+
+    if (handOneIsPair && !handTwoIsPair) { return handOne }
+
+    if (!handOneIsPair && handTwoIsPair) { return handTwo }
+
+    if (pointMap[handOne[0]] > pointMap[handTwo[0]]) {
+      return handOne
+    } else {
+      return handTwo
+    }
+  }
+
+  // if handOneisPair & !handTwoIsPair return handOne
+  // if (handOneIsPair || (handTwoIsPair) === true)
+
+  // Calculate the score of hand by adding handOne together (hand[i - 1] + hand[i])
+  // let handScore = 0
+
+  // handScore = hand[0] + hand[1]
+
+  // return handScore
+
+  // Check if hand is a pair
+  isPairCheck (hand) {
+    return hand[0] === hand[1]
+  }
 }
 
+// 1) hand = ['A', 'A']
+// 2) hand = [3, 'K']
+// If hand has a pair of card that are identical return true else false
+// const firstCard = hand[0] // 'A' and 3
+// for (let i = 1; i < hand.length; i++) {
+//   if (firstCard !== hand[i]) {
+//     //Current card not equal firstCard so no pair
+//     return false // for hand = [3, 'K']
+//   }
+// }
+// // If we reach this point then every card in the hand equals the first card, so we have a pair
+// return true // for hand = ['A', 'A']
+
+// const poker = new Poker()
+// const result = poker.winningPair(['Card2', 'Card5'], ['Card3', 'Card7'])
+// console.log(result)
+
 module.exports = Poker
+
+// winningPair(array1, array2)
+
+// Input: [string, string], [string, string]
+// Output: [string, string]
+// ------
+// IS_ARRAY1_A_PAIR is false
+// IS_ARRAY2_A_PAIR is false
+
+// IF array1 index 0 is the same as array1 index 1 THEN
+//   set IS_ARRAY1_A_PAIR to TRUE
+// END IF
+
+// IF array2 index 0 is the same as array2 index 1 THEN
+//   set IS_ARRAY2_A_PAIR to TRUE
+// END IF
+
+// IF array1 and array2 are not pairs THEN
+//   output an empty array
+// END IF
+
+// IF array1 is a pair but array2 is not a pair THEN
+//   ouput array1
+// END IF
+
+// IF array2 is a pair but array1 is not a pair THEN
+//   output array2
+// END IF
+
+// IF array1 and array2 are both pairs THEN
+
+//   ARRAY1_SCORE is 0
+//   FOR each item in array1
+//     add the current item's point value to ARRAY1_SCORE
+//   END FOR
+
+//   ARRAY2_SCORE is 0
+//   FOR each item in array2
+//     add the current item's point value to ARRAY2_SCORE
+//   END FOR
+
+//   output the array with the highest score
+
+// END IF
