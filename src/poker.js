@@ -27,8 +27,6 @@ class Poker {
     let currentWinningScoreTrio = 0;
     let currentWinningHandTrio;
 
-    let trioIsPresent = false;
-
     cardHandArray.forEach((hand) => {
       const handIsPair = this.isPair(hand);
       const handIsTrio = this.isTrio(hand);
