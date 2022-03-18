@@ -16,41 +16,12 @@ const cardPointMap = {
 };
 
 class Poker {
-  winningPair(hand1, hand2) {
-    const handOneIsPair = this.isPair(hand1);
-    const handTwoIsPair = this.isPair(hand2);
-    const handOneCardValue = this.cardValue(hand1);
-    const handTwoCardValue = this.cardValue(hand2);
-
-    if (!handOneIsPair && !handTwoIsPair) return [];
-
-    if (handOneIsPair && handTwoIsPair) {
-      if (handOneCardValue > handTwoCardValue) return hand1;
-      if (handOneCardValue < handTwoCardValue) return hand2;
-    }
-
-    if (handOneIsPair || handTwoIsPair) {
-      if (handOneIsPair) return hand1;
-      if (handTwoIsPair) return hand2;
-    }
-  }
-
-  winningPairFromArray(cardHandArray) {
-    let currentWinningScore = 0;
-    let currentWinningHand;
-
-    cardHandArray.forEach((hand) => {
-      if (!this.isPair(hand)) return;
-      if (this.isPair(hand) && this.cardValue(hand) > currentWinningScore) {
-        currentWinningScore = this.cardValue(hand);
-        currentWinningHand = hand;
-      }
-    });
-    if (currentWinningScore === 0) return [];
-    return currentWinningHand;
-  }
-
-  winning3CardHand(cardHandArray) {
+  /** ----------------------------------------------------------------------------------------------------------
+   * determines the winning hand whether its a nested array of pairs or triples (tackles extension 1 + extension2)
+   * @param {array} arr takes in an array of hands (arrays with either 2 or 3 indexes (cards))
+   * @returns single array (hand)
+   */
+  winningHand(cardHandArray) {
     let currentWinningScorePair = 0;
     let currentWinningHandPair;
     let currentWinningScoreTrio = 0;
@@ -86,6 +57,7 @@ class Poker {
     if (currentWinningScorePair > 0 && currentWinningScoreTrio === 0)
       return currentWinningHandPair;
   }
+  // -----------------------------------------------------------------------------------------------------------
 
   /** ----------------------------------------------------------------------------------------------------------
    * checks if the card hand (a single array with 2 strings denoting 'cards') is a pair or not
@@ -125,5 +97,24 @@ class Poker {
   }
   // ------------------------------------------------------------------------------------------------------------
 }
+
+// winningPair(hand1, hand2) {
+//   const handOneIsPair = this.isPair(hand1);
+//   const handTwoIsPair = this.isPair(hand2);
+//   const handOneCardValue = this.cardValue(hand1);
+//   const handTwoCardValue = this.cardValue(hand2);
+
+//   if (!handOneIsPair && !handTwoIsPair) return [];
+
+//   if (handOneIsPair && handTwoIsPair) {
+//     if (handOneCardValue > handTwoCardValue) return hand1;
+//     if (handOneCardValue < handTwoCardValue) return hand2;
+//   }
+
+//   if (handOneIsPair || handTwoIsPair) {
+//     if (handOneIsPair) return hand1;
+//     if (handTwoIsPair) return hand2;
+//   }
+// }
 
 module.exports = Poker;
