@@ -10,24 +10,24 @@
 // if both of the arrays have pairs, figutre out which pair scores higher
 // Check every card in an array against some kind of point value
 // Do that for both arrays compare the total score then return the array with the highest score
-const cardScores = {
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 7,
-  8: 8,
-  9: 9,
-  10: 10,
-  J: 11,
-  Q: 12,
-  K: 13,
-  A: 14
-}
 
 class Poker {
-  winningpair (handOne, handTwo) {
+  checkForPair (hand) { return hand[0] === hand[1] || hand[0] === hand[2] || hand[1] === hand[2] }
+
+  winningPair (handOne, handTwo) {
+    if (handOne[0] !== handOne[1] && handTwo[0] !== handTwo[1]) {
+      return []
+    } else if (handOne[0] === handOne[1] && handTwo[0] !== handTwo[1]) {
+      return handOne
+    } else if (handOne[0] !== handOne[1] && handTwo[0] === handTwo[1]) {
+      return handTwo
+    } else {
+      if (handOne[0] > handTwo[0]) {
+        return handOne
+      } else {
+        return handTwo
+      }
+    }
   }
 }
 
