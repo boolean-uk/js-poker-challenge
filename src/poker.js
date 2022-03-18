@@ -12,7 +12,7 @@
 // Do that for both arrays compare the total score then return the array with the highest score
 
 class Poker {
-  checkForPair (hand) { return hand[0] === hand[1] || hand[0] === hand[2] || hand[1] === hand[2] }
+  
 
   winningPair (handOne, handTwo) {
     if (handOne[0] !== handOne[1] && handTwo[0] !== handTwo[1]) {
