@@ -33,25 +33,25 @@ class Poker {
       : player2;
   }
 
-  // winningPairFromArray(players) {
-  //   const convertedPlayers = this.lettersToNumbers(players);
-  //   const cardsArr = [];
-  //   // Go through the entire array and check if every two cards are a pair
-  //   for (let i = 0; i < convertedPlayers.length; i += 2) {
-  //     if (convertedPlayers[i] === convertedPlayers[i + 1]) {
-  //       cardsArr.push(convertedPlayers[i]);
-  //       cardsArr.push(convertedPlayers[i + 1]);
-  //     }
-  //   }
-  //   // Sort the cards from the smallest to biggest
-  //   cardsArr.sort((a, b) => {
-  //     return a - b;
-  //   });
+  winningPairFromArray(players) {
+    const cardsArr = [];
+    const cardsCombined = players.flat();
+    // Go through the entire array and check if every two cards are a pair
+    for (let i = 0; i < cardsCombined.length; i += 2) {
+      if (cardsCombined[i] === cardsCombined[i + 1]) {
+        cardsArr.push(cardsCombined[i]);
+        cardsArr.push(cardsCombined[i + 1]);
+      }
+    }
+    // Sort the cards from the smallest to biggest
+    cardsArr.sort((a, b) => {
+      return this.cardValue[a] - this.cardValue[b];
+    });
 
-  //   // Return the last two index as they are the biggest pair and convert them into string
-  //   const winningPair = cardsArr.slice(cardsArr.length - 2);
-  //   return this.numbersToLetters(winningPair);
-  // }
+    // Return the last two index as they are the biggest pair and convert them into string
+    const winningPair = cardsArr.slice(cardsArr.length - 2);
+    return winningPair;
+  }
 
   // winning3CardHand(players) {
   //   const cardsArr = [];
