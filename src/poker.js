@@ -17,6 +17,7 @@ class Poker {
     };
   }
 
+  /*------ Basic Criteria ------*/
   winningPair(player1, player2) {
     // If there are no pairs, return an empty array
     return player1[0] !== player1[1] && player2[0] !== player2[1]
@@ -33,6 +34,7 @@ class Poker {
       : player2;
   }
 
+  /*------ Extended Criteria Part 1------*/
   winningPairFromArray(players) {
     const cardsArr = [];
     const cardsCombined = players.flat();
@@ -43,59 +45,50 @@ class Poker {
         cardsArr.push(cardsCombined[i + 1]);
       }
     }
+
     // Sort the cards from the smallest to biggest
-    cardsArr.sort((a, b) => {
-      return this.cardValue[a] - this.cardValue[b];
+    cardsArr.sort((card1, card2) => {
+      return this.cardValue[card1] - this.cardValue[card2];
     });
 
-    // Return the last two index as they are the biggest pair and convert them into string
+    // Return the last two index as they are the biggest pair
     const winningPair = cardsArr.slice(cardsArr.length - 2);
     return winningPair;
   }
 
-  // winning3CardHand(players) {
-  //   const cardsArr = [];
+  /*------ Extended Criteria Part 2------*/
+  winning3CardHand(players) {
+    const matchingCards = [];
+    const mostCards = [];
 
-  //   // push the cards array if all the elements are the same
-  //   for (let cards of players) {
-  //     if (cards.every((card) => card === cards[0])) cardsArr.push(cards);
-  //   }
+    // push the cards array that all cards are the same
+    for (let cards of players) {
+      if (cards.every((card) => card === cards[0])) matchingCards.push(cards);
+    }
 
-  //   console.log(cardsArr);
-  //   const arr = cardsArr.filter((cards) => {
-  //     if (cards.length === 3) {
-  //       return cards;
-  //     } if (c)
-  //   });
-  //   console.log(`arr: ${arr}`);
+    //If there is only one card array, return that array
+    if (matchingCards.length === 1) return matchingCards.flat();
 
-  //   // combine the arrays and convert letters to numbers
-  //   const cardsCombined = arr.flat();
-  //   const convertedCards = this.lettersToNumbers(cardsCombined);
+    //If not, push the card arrays that has the most amount of cards
+    for (let i = 0; i < matchingCards.length - 1; i++) {
+      if (matchingCards[i].length >= matchingCards[i + 1].length) {
+        mostCards.push(matchingCards[i]);
+      }
+      mostCards.push(matchingCards[i + 1]);
+    }
 
-  //   console.log(`convertedCards: ${convertedCards}`);
+    // Sort the cards from the smallest to biggest
+    mostCards.sort((card1, card2) => {
+      return this.cardValue[card1[0]] - this.cardValue[card2[0]];
+    });
 
-  //   // Sort the cards from the smallest to biggest
+    //filter the numbers that has the biggest value
+    const winning3Cards = mostCards.filter(
+      (num) => mostCards[mostCards.length - 1] === num
+    );
 
-  //   convertedCards.sort((a, b) => {
-  //     return a - b;
-  //   });
-
-  //   //filter the numbers that has the biggest value
-  //   const winning3Cards = convertedCards.filter(
-  //     (num) => convertedCards[convertedCards.length - 1] === num
-  //   );
-
-  //   return this.numbersToLetters(winning3Cards);
-  // }
+    return winning3Cards.flat();
+  }
 }
 
 module.exports = Poker;
-
-// const poker = new Poker();
-// console.log(
-//   poker.winning3CardHand([
-//     ["Q", "Q"],
-//     ["9", "9"],
-//   ])
-// );
