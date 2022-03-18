@@ -102,11 +102,16 @@ class Poker {
       if (cards.every((card) => card === cards[0])) cardsArr.push(cards);
     }
 
+    console.log(cardsArr);
+
     // combine the arrays and convert letters to numbers
-    const cardsCombined = cardsArr.flat();
+    const cardsCombined = arr.flat();
     const convertedCards = this.lettersToNumbers(cardsCombined);
 
+    console.log(`convertedCards: ${convertedCards}`);
+
     // Sort the cards from the smallest to biggest
+
     convertedCards.sort((a, b) => {
       return a - b;
     });
@@ -120,14 +125,4 @@ class Poker {
   }
 }
 
-// module.exports = Poker;
-
-const poker = new Poker();
-console.log(
-  poker.winning3CardHand([
-    ["5", "5", "3"],
-    ["A", "A"],
-    ["7", "7", "7"],
-    ["Q", "J", "9"],
-  ])
-);
+module.exports = Poker;

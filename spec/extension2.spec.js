@@ -13,7 +13,7 @@ describe("Poker", () => {
     expect(result).toEqual(["7", "7", "7"]);
   });
 
-  fit("should return ['7', '7', '7'] for [['5', '5', '3'], ['A', 'A'], ['7', '7', '7'], ['Q', 'J', '9']]", () => {
+  it("should return ['7', '7', '7'] for [['5', '5', '3'], ['A', 'A'], ['7', '7', '7'], ['Q', 'J', '9']]", () => {
     poker = new Poker();
 
     const result = poker.winning3CardHand([
