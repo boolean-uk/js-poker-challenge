@@ -1,16 +1,3 @@
-//inp 2 arrays of 2 strings
-//out one array of 2 strings or empty array
-
-// check if array exists
-// check if array has for time being 2 arguments of arrays
-// check if its a valid card
-//if true
-// check both sets for a match
-// if no match for eother return []
-// if match for one, return the matched one
-// if both match which has a highest card value
-// crad values need to be index with an integer value
-
 const cardPointMap = {
   A: 14,
   K: 13,
@@ -30,36 +17,113 @@ const cardPointMap = {
 
 class Poker {
   winningPair(hand1, hand2) {
-    const [card1, card2] = hand1;
-    const [card3, card4] = hand2;
+    const handOneIsPair = this.isPair(hand1);
+    const handTwoIsPair = this.isPair(hand2);
+    const handOneCardValue = this.cardValue(hand1);
+    const handTwoCardValue = this.cardValue(hand2);
 
-    if (card1 !== card2 && card3 !== card4) return [];
+    if (!handOneIsPair && !handTwoIsPair) return [];
 
-    if (card1 === card2 && card3 === card4) {
-      if (cardPointMap[card1] > cardPointMap[card3]) return hand1;
-      if (cardPointMap[card1] < cardPointMap[card3]) return hand2;
+    if (handOneIsPair && handTwoIsPair) {
+      if (handOneCardValue > handTwoCardValue) return hand1;
+      if (handOneCardValue < handTwoCardValue) return hand2;
     }
 
-    if (card1 === card2 || card3 === card4) {
-      if (card1 === card2) return hand1;
-      if (card3 === card4) return hand2;
+    if (handOneIsPair || handTwoIsPair) {
+      if (handOneIsPair) return hand1;
+      if (handTwoIsPair) return hand2;
     }
   }
+
+  winningPairFromArray(cardHandArray) {
+    let currentWinningScore = 0;
+    let currentWinningHand;
+
+    cardHandArray.forEach((hand) => {
+      if (!this.isPair(hand)) return;
+      if (this.isPair(hand) && this.cardValue(hand) > currentWinningScore) {
+        currentWinningScore = this.cardValue(hand);
+        currentWinningHand = hand;
+      }
+    });
+    if (currentWinningScore === 0) return [];
+    return currentWinningHand;
+  }
+
+  winning3CardHand(cardHandArray) {
+    let currentWinningScorePair = 0;
+    let currentWinningHandPair;
+    let currentWinningScoreTrio = 0;
+    let currentWinningHandTrio;
+
+    let trioIsPresent = false;
+
+    cardHandArray.forEach((hand) => {
+      const handIsPair = this.isPair(hand);
+      const handIsTrio = this.isTrio(hand);
+      const handCardValue = this.cardValue(hand);
+
+      if (!handIsPair) return;
+
+      if (handIsTrio && handCardValue > currentWinningScoreTrio) {
+        currentWinningScoreTrio = handCardValue;
+        currentWinningHandTrio = hand;
+        trioIsPresent = true;
+      }
+
+      if (!trioIsPresent)
+        if (handIsPair && handCardValue > currentWinningScorePair) {
+          currentWinningScorePair = handCardValue;
+          currentWinningHandPair = hand;
+        }
+    });
+
+    if (currentWinningScorePair === 0) return [];
+
+    if (currentWinningScorePair > 0 && currentWinningScoreTrio > 0)
+      return currentWinningHandTrio;
+
+    if (currentWinningScorePair > 0 && currentWinningScoreTrio === 0)
+      return currentWinningHandPair;
+  }
+
+  /** ----------------------------------------------------------------------------------------------------------
+   * checks if the card hand (a single array with 2 strings denoting 'cards') is a pair or not
+   * @param {array} arr takes in a card hand array
+   * @returns boolean
+   */
+  isPair(arr) {
+    const [card1, card2] = arr;
+
+    return card1 === card2;
+  }
+  // -------------------------------------------------------------------------------------------------------------
+
+  /** ------------------------------------------------------------------------------------------------------------
+   * checks if the card hand (a single array with 3 strings denoting 'cards') is a trio or not
+   * @param {array} arr takes in a card hand array
+   * @returns boolean
+   */
+  isTrio(arr) {
+    const [card1, card2, card3] = arr;
+
+    return card1 === card2 && card2 === card3;
+  }
+  //  ------------------------------------------------------------------------------------------------------------
+
+  /** ------------------------------------------------------------------------------------------------------------
+   * returns the card value as an integer for the card hand array passed into it (ONLY USED WHEN YOU KNOW IT'S A PAIR)
+   * @param {array} arr takes in a card hand
+   * @returns integer
+   */
+  cardValue(arr) {
+    const [card1, card2] = arr;
+
+    if (card1 === card2) return cardPointMap[card1];
+
+    return false;
+  }
+  // ------------------------------------------------------------------------------------------------------------
 }
 
-// --------------------------- testing -----------------------------
-
-// function winningPair(hand1, hand2) {
-//   const [card1, card2] = hand1;
-//   const [card3, card4] = hand2;
-
-//   if (card1 !== card2 && card3 !== card4) return console.log([]);
-
-//   if (card1 === card2 && card3 === card4) {
-//     if (cardPointMap[card1] > cardPointMap[card3]) return console.log(hand1);
-//     if (cardPointMap[card1] < cardPointMap[card3]) return console.log(hand2);
-//   }
-// }
-
-// winningPair(["J", "J"], ["A", "A"]);
 module.exports = Poker;
