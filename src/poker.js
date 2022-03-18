@@ -39,14 +39,12 @@ class Poker {
       if (handIsTrio && handCardValue > currentWinningScoreTrio) {
         currentWinningScoreTrio = handCardValue;
         currentWinningHandTrio = hand;
-        trioIsPresent = true;
       }
 
-      if (!trioIsPresent)
-        if (handIsPair && handCardValue > currentWinningScorePair) {
-          currentWinningScorePair = handCardValue;
-          currentWinningHandPair = hand;
-        }
+      if (handIsPair && handCardValue > currentWinningScorePair) {
+        currentWinningScorePair = handCardValue;
+        currentWinningHandPair = hand;
+      }
     });
 
     if (currentWinningScorePair === 0) return [];
