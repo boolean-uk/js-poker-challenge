@@ -33,9 +33,6 @@ class Poker {
     if (array1[0] === array1[1] && array2[0] !== array2[1]) {
       return array1;
     }
-    if (array1[0] !== array1[1] && array2[0] === array2[1]) {
-      return array2;
-    }
     if (
       this.scoreMap[array1[0]] + this.scoreMap[array1[0]] >
       this.scoreMap[array2[0]] + this.scoreMap[array2[0]]
@@ -60,12 +57,6 @@ class Poker {
     }
     return array[returnArray.indexOf(Math.max(...returnArray))];
   }
-  //   = [
-  //   ["5", "5", "3"],
-  //   ["A", "A"],
-  //   ["7", "7", "7"],
-  //   ["Q", "J", "9"]
-  // ]
 
   winning3CardHand(outerArray) {
     let returnArray = [];
