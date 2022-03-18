@@ -5,7 +5,8 @@
 // If they are, it's a pair.
 // If not, it's not a pair.
 // If neither of the arrays has a pair, return []
-// If one of the arrays has a pair, return that pair
+// If one of the arrays has a pair, and the other one doesn't, return the pair.
+// e.g. If handOne id a pair, and handTwo is not a pair, return handOne. And vice versa
 
 // If both of the arrays have pairs, figure out which pair scores higher
 // Check every card in one of the arrays against some kind of point value
@@ -31,31 +32,27 @@ const cards = {
 
 class Poker {
   winningPair(handOne, handTwo) {
-    // Check if both items in an array are the same
-    // handOne = ["A", "A"]
-    // handOne [0] === handOne [1]
-    // This is checking if the fst card equal the 2nd card.
-    let handOneIsPair = false; // We don't know if handOne has two cards that are identical.
+    let handOneIsPair = false;
     if (handOne[0] === handOne[1]) {
-      // check if first card is equal to second card in handOne
-      // if first card equals 2nd card
       handOneIsPair = true;
     }
 
-    let handTwoIsPair = false; // We don't know if handOne has two cards that are identical.
+    let handTwoIsPair = false;
     if (handTwo[0] === handTwo[1]) {
-      // check if first card is equal to second card in handOne
-      // if first card equals 2nd card
       handTwoIsPair = true;
     }
 
     if (handOneIsPair === false && handTwoIsPair === false) {
-      // If handOne is NOT a pair AND handTwo is NOT a pair, return [].
       return [];
     }
 
-    // If they are, it's a pair.
-    // If not, it's not a pair.
+    if (handOneIsPair === false && handTwoIsPair === true) {
+      return handTwoIsPair;
+    }
+
+    if (handOneIsPair === true && handTwoIsPair === false) {
+      return handOneIsPair;
+    }
   }
 }
 
