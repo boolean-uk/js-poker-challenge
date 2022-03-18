@@ -52,8 +52,7 @@ class Poker {
     });
 
     // Return the last two index as they are the biggest pair
-    const winningPair = cardsArr.slice(cardsArr.length - 2);
-    return winningPair;
+    return cardsArr.slice(cardsArr.length - 2);
   }
 
   /*------ Extended Criteria Part 2------*/
