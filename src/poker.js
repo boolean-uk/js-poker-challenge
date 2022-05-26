@@ -2,6 +2,7 @@ class Poker {
 
   constructor() {
     this.isPair = p => p[0] === p[1]
+    this.is3OfAKind = p => p[0] === p[1] && p[1] === p[2]
     this.isHigher = (p1, p2) => p1[0] > p2[0] ? p1 : p2
   }
 
@@ -14,18 +15,21 @@ class Poker {
         result
   }
 
-  winningPairFromArray(arr) {
-    const realPairs = arr.filter(pair => this.isPair(pair))
-
-    const sortedNonRoyals = realPairs.filter(ps => {
-      return !ps.includes("J") && !ps.includes("Q") &&
-      !ps.includes("K") && !ps.includes("A")
+  sortNonRoyals = (arr) => {
+    return arr.filter(ps => {
+      return !ps.includes("10") && !ps.includes("J") &&
+        !ps.includes("Q") && !ps.includes("K") && !ps.includes("A")
     }).sort()
-    
+  }
+
+  sortRoyals = (arr) => {
     const sortedRoyals = []
-    const royals = realPairs.filter(ps => {
-      return ps.includes("J") || ps.includes("Q") ||
-      ps.includes("K") || ps.includes("A")
+    const royals = arr.filter(ps => {
+      return ps.includes("10") || ps.includes("J") ||
+        ps.includes("Q") || ps.includes("K") || ps.includes("A")
+    })
+    royals.map(ps => {
+      if(ps.includes("10")) sortedRoyals.push(ps)
     })
     royals.map(ps => {
       if(ps.includes("J")) sortedRoyals.push(ps)
@@ -39,9 +43,32 @@ class Poker {
     royals.map(ps => {
       if(ps.includes("A")) sortedRoyals.push(ps)
     })
+    return sortedRoyals
+  }
+
+  winningPairFromArray(arr) {
+    const realPairs = arr.filter(pair => this.isPair(pair))
+
+    const sortedNonRoyals = this.sortNonRoyals(realPairs)
+    
+    const sortedRoyals = this.sortRoyals(realPairs)
 
     const sortedRealPairs = sortedNonRoyals.concat(sortedRoyals)
     return realPairs.length > 0 ? sortedRealPairs[sortedRealPairs.length - 1] : realPairs
+  }
+
+  winning3CardHand(arr) {
+    const onlyPairs = arr.filter(hand => hand.length === 2)
+    const realPairs = onlyPairs.filter(pair => this.isPair(pair))
+    const winningPair = this.winningPairFromArray(realPairs)
+
+    const real3OfAKind = arr.filter(hand => this.is3OfAKind(hand))
+    const sortedNonRoyals = this.sortNonRoyals(real3OfAKind)
+    const sortedRoyals = this.sortRoyals(real3OfAKind)
+    const sortedReal3OfAKinds = sortedNonRoyals.concat(sortedRoyals)
+
+    return sortedReal3OfAKinds.length > 0 ? sortedReal3OfAKinds[sortedReal3OfAKinds.length - 1] :
+      winningPair.length > 0 ? winningPair : []
   }
 }
 
