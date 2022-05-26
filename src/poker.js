@@ -2,28 +2,26 @@ class Poker {
 
   constructor() {
     this.isPair = p => p[0] === p[1]
+    this.isHigher = (p1, p2) => p1[0] > p2[0] ? p1 : p2
   }
 
   winningPair(pair1, pair2) {
-
     let result 
-
     if (this.isPair(pair1)) result = pair1
     if (this.isPair(pair2)) result = pair2 
-
-    return !this.isPair(pair1) && !this.isPair(pair2) ? [] : result
-
+    return !this.isPair(pair1) && !this.isPair(pair2) ? [] : 
+      this.isPair(pair1) && this.isPair(pair2) ? this.isHigher(pair1, pair2) :
+        result
   }
 
   winningPairFromArray(arr) {
-
     const realPairs = arr.filter(pair => this.isPair(pair))
 
     const sortedNonRoyals = realPairs.filter(ps => {
       return !ps.includes("J") && !ps.includes("Q") &&
       !ps.includes("K") && !ps.includes("A")
     }).sort()
-
+    
     const sortedRoyals = []
     const royals = realPairs.filter(ps => {
       return ps.includes("J") || ps.includes("Q") ||
@@ -44,7 +42,6 @@ class Poker {
 
     const sortedRealPairs = sortedNonRoyals.concat(sortedRoyals)
     return realPairs.length > 0 ? sortedRealPairs[sortedRealPairs.length - 1] : realPairs
-    
   }
 }
 
