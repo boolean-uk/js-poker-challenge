@@ -48,7 +48,7 @@ function winningPair(cards1, cards2) {
 }
 // Extension criteria
 function findDoublesInArr(arr) {
-  let doublesArr = []
+  const doublesArr = []
   for (let i = 0; i < arr.length; i++) {
     if (arr[i][0] === arr[i][1]) {
       doublesArr.push(arr[i])
@@ -65,7 +65,7 @@ function winningPairFromArray(arr) {
 
   let winnerNumber = 0
   let winnerCards
-  let doublesArrNum = []
+  const doublesArrNum = []
 
   for (let i = 0; i < doublesArr.length; i++) {
     doublesArrNum.push(convertArr(doublesArr[i]))
@@ -75,7 +75,7 @@ function winningPairFromArray(arr) {
       winnerCards = doublesArr[i]
     }
   }
-  
+
   return winnerCards
 }
 
