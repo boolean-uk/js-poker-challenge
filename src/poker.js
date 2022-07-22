@@ -14,7 +14,7 @@ const highCards = {
   A: '14'
 }
 function convertArr(cards) {
-  const newCards = [cards[0], cards[1]]
+  const newCards = [...cards]
   for (let i = 0; i < cards.length; i++) {
     if (Object.keys(highCards).includes(cards[i])) {
       newCards.splice(i, 1, highCards[cards[i]])
@@ -47,8 +47,37 @@ function winningPair(cards1, cards2) {
   }
 }
 // Extension criteria
+function findDoublesInArr(arr) {
+  let doublesArr = []
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][0] === arr[i][1]) {
+      doublesArr.push(arr[i])
+    }
+  }
+  return doublesArr
+}
+function winningPairFromArray(arr) {
+  const doublesArr = findDoublesInArr(arr)
 
-function winningPairFromArray() {}
+  if (doublesArr.length === 0) {
+    return []
+  }
+
+  let winnerNumber = 0
+  let winnerCards
+  let doublesArrNum = []
+
+  for (let i = 0; i < doublesArr.length; i++) {
+    doublesArrNum.push(convertArr(doublesArr[i]))
+
+    if (winnerNumber < doublesArrNum[i][0]) {
+      winnerNumber = doublesArrNum[i][0]
+      winnerCards = doublesArr[i]
+    }
+  }
+  
+  return winnerCards
+}
 
 function winning3CardHand() {}
 
