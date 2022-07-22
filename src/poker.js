@@ -50,7 +50,7 @@ function winningPair(cards1, cards2) {
 function findDoublesInArr(arr) {
   const doublesArr = []
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i][0] === arr[i][1]) {
+    if (arr[i][0] === arr[i][1] && arr[i].length === 2) {
       doublesArr.push(arr[i])
     }
   }
@@ -79,7 +79,50 @@ function winningPairFromArray(arr) {
   return winnerCards
 }
 
-function winning3CardHand() {}
+function findTriplesInArr(arr) {
+  const triplesArr = []
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][0] === arr[i][1] && arr[i][0] === arr[i][2]) {
+      triplesArr.push(arr[i])
+    }
+  }
+  return triplesArr
+}
+
+function winning3CardHand(arr) {
+  const doublesArr = findDoublesInArr(arr)
+  const triplesArr = findTriplesInArr(arr)
+
+  if (triplesArr.length === 0 && doublesArr.length === 0) {
+    return []
+  }
+
+  let winnerNumber = 0
+  let winnerCards
+  const doublesArrNum = []
+  const triplesArrNum = []
+
+  if (triplesArr.length === 0) {
+    for (let i = 0; i < doublesArr.length; i++) {
+      doublesArrNum.push(convertArr(doublesArr[i]))
+
+      if (winnerNumber < doublesArrNum[i][0]) {
+        winnerNumber = doublesArrNum[i][0]
+        winnerCards = doublesArr[i]
+      }
+    }
+  }
+
+  for (let i = 0; i < triplesArr.length; i++) {
+    triplesArrNum.push(convertArr(triplesArr[i]))
+    if (winnerNumber < triplesArrNum[i][0]) {
+      winnerNumber = triplesArrNum[i][0]
+      winnerCards = triplesArr[i]
+    }
+  }
+
+  return winnerCards
+}
 
 module.exports = {
   winningPair,
