@@ -18,13 +18,18 @@ function comparePoints(arr1, arr2) {
   return points.indexOf(arr1[0]) - points.indexOf(arr2[0])
 }
 
-function isPair(arr) {
-  return arr[0] === arr[1]
+function isValidFigure(arr) {
+  return arr.every((e) => e === arr[0])
 }
 
 function winningPair(arr1, arr2) {
-  // if (arr1.length !== 2 || arr2.length !== 2) return []
-  if (!isPair(arr1) || !isPair(arr2)) return []
+  return winningFigure(arr1, arr2)
+}
+
+function winningFigure(arr1, arr2) {
+  if (!isValidFigure(arr1) && !isValidFigure(arr2)) return []
+  else if (!isValidFigure(arr1)) return arr2
+  else if (!isValidFigure(arr2)) return arr1
   else {
     const diff = comparePoints(arr1, arr2)
     if (diff >= 0) return arr1
@@ -32,22 +37,40 @@ function winningPair(arr1, arr2) {
   }
 }
 
-// Extension criteria
-
 function winningPairFromArray(arrayOfPairs) {
   let winning = []
   for (let i = 0; i < arrayOfPairs.length; i++) {
-    if (isPair(arrayOfPairs[i])) {
+    if (isValidFigure(arrayOfPairs[i])) {
       if (winning === []) winning = arrayOfPairs[i]
       const currentPair = arrayOfPairs[i]
-      const pair = winningPair(currentPair, winning)
+      const pair = winningFigure(currentPair, winning)
       winning = pair
     }
   }
   return winning
 }
 
-function winning3CardHand() {}
+function winningThreeFromArray(arrayOfFigures) {
+  let winning = []
+  for (let i = 0; i < arrayOfFigures.length; i++) {
+    if (isValidFigure(arrayOfFigures[i]) && arrayOfFigures[i].length === 3) {
+      if (winning === []) winning = arrayOfFigures[i]
+      const currentThree = arrayOfFigures[i]
+      const three = winningFigure(currentThree, winning)
+      winning = three
+    }
+  }
+  return winning
+}
+
+function winning3CardHand(arrayOfFigures) {
+  let winning = []
+  winning = winningThreeFromArray(arrayOfFigures)
+  if (winning.length === 0) {
+    winning = winningPairFromArray(arrayOfFigures)
+  }
+  return winning
+}
 
 module.exports = {
   winningPair,
