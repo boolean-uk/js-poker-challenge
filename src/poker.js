@@ -53,23 +53,13 @@ function areThreeCardsIdentical(cards) {
   return result
 }
 
-const isHigherTriple = (cards1, cards2, cards3) => {
-  const cardValue1 = parseInt(getCardValue(cards1[0]), 10)
-  const cardValue2 = parseInt(getCardValue(cards2[0]), 10)
-  const cardValue3 = parseInt(getCardValue(cards3[0]), 10)
-  let higherCardValue =  cardValue1 > cardValue2 ? cards1 : cards2
-  return higherCardValue > cardValue3 ? higherCardValue : cardValue3
-};
-
-function winningTriple(triple1, triple2, triple3) {
+function winningTriple(triple1, triple2) {
   if (areThreeCardsIdentical(triple1) && areThreeCardsIdentical(triple2)) {
-    return isHigherTriple(triple1, triple2, triple3)
+    return isHigher(triple1, triple2)
   } else if (areThreeCardsIdentical(triple1)) {
     return triple1
   } else if (areThreeCardsIdentical(triple2)) {
     return triple2
-  } else if (areThreeCardsIdentical(triple3)) {
-    return triple3
   } else {
     return [];
   }
