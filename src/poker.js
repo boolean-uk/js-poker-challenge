@@ -16,7 +16,11 @@ const cardsValues = {
 }
 
 function isPair(array) {
-  return array[0] === array[1]
+  const mappedHands = array
+    .map((card) => cardsValues[card])
+    .sort()
+    .reverse()
+  return mappedHands[0] === mappedHands[1]
 }
 
 function isThree(array) {
