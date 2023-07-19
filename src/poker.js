@@ -1,4 +1,4 @@
-function isPair(cards) {
+ function isPair(cards) {
   return cards.length === 2 && cards[0] === cards[1]
 }
 
@@ -30,7 +30,39 @@ function winningPairFromArray(pairsArray) {
   }, [])
 }
 
-function winning3CardHand() {}
+function winning3CardHand(hands) {
+  if (!Array.isArray(hands) || hands.length === 0) {
+    return []
+  }
+
+  const getValue = (card) => {
+    const values = { A: 14, K: 13, Q: 12, J: 11 }
+    return isNaN(card) ? values[card] : parseInt(card, 10)
+  }
+
+  let highestCardValue = 0
+  let winningHands = []
+
+  for (let i = 0; i < hands.length; i++) {
+    const currentHand = hands[i]
+    const currentCardValue = Math.max(...currentHand.map((card) => getValue(card)))
+
+    if (currentCardValue > highestCardValue) {
+      winningHands = [currentHand]
+      highestCardValue = currentCardValue
+    } else if (currentCardValue === highestCardValue) {
+      winningHands.push(currentHand)
+    }
+  }
+
+  if (winningHands.length === 0) {
+    return []
+  }
+
+  return winningHands.flat()
+}
+
+
 
 module.exports = {
   winningPair,
