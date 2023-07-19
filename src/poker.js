@@ -24,7 +24,23 @@ function winningPair(pair1, pair2) {
 
 // Extension criteria
 
-function winningPairFromArray() {}
+function winningPairFromArray(pairs) {
+  pairs = pairs.filter(pairCheck)
+  
+  let bestPair
+
+  for(const pair of pairs) {
+    if(bestPair == null) {
+      bestPair = pair
+      continue
+    }
+
+    if (checkNumber(pair)[0] > checkNumber(bestPair)[0]) {
+      bestPair = pair
+    }
+  }
+  return bestPair ?? []
+}
 
 function winning3CardHand() {}
 
