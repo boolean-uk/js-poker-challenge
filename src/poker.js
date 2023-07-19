@@ -9,6 +9,10 @@ function pairCheck(pair) {
   return pair[0] === pair[1]
 }
 
+function setCheck(hand) {
+  return hand.length === 3 && hand[0] === hand[1] && hand[1] === hand[2]
+}
+
 const checkNumber = (pairs) =>
   pairs.map((pair) => Number(cardNumbers[pair] || pair))
 
@@ -26,11 +30,11 @@ function winningPair(pair1, pair2) {
 
 function winningPairFromArray(pairs) {
   pairs = pairs.filter(pairCheck)
-  
+
   let bestPair
 
-  for(const pair of pairs) {
-    if(bestPair == null) {
+  for (const pair of pairs) {
+    if (bestPair == null) {
       bestPair = pair
       continue
     }
@@ -42,7 +46,24 @@ function winningPairFromArray(pairs) {
   return bestPair ?? []
 }
 
-function winning3CardHand() {}
+function winning3CardHand(hands) {
+  const setHands = hands.filter(setCheck)
+  if (setHands.length === 0) return winningPairFromArray(hands)
+
+  let bestSet
+
+  for (const setHand of setHands) {
+    if (bestSet == null) {
+      bestSet = setHand
+      continue
+    }
+
+    if (checkNumber(setHand)[0] > checkNumber(bestSet)[0]) {
+      bestSet = setHand
+    }
+  }
+  return bestSet ?? []
+}
 
 module.exports = {
   winningPair,
