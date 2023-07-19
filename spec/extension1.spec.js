@@ -2,7 +2,10 @@ const { winningPairFromArray } = require('../src/poker')
 
 describe('Poker', () => {
   it("should return ['A', 'A'] for [['K', 'K'], ['A', 'A']]", () => {
-    const result = winningPairFromArray([['K', 'K'], ['A', 'A']])
+    const result = winningPairFromArray([
+      ['K', 'K'],
+      ['A', 'A']
+    ])
 
     expect(result).toEqual(['A', 'A'])
   })
