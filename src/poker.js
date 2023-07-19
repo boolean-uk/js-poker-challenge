@@ -40,10 +40,29 @@ function winningPair(pair1, pair2) {
 // Extension criteria
 
 function winningPairFromArray(arrPair) {
+  let index = -1
+  let winningCards
   if (arrPair.length === 2) {
     return winningPair(arrPair[0], arrPair[1])
+  } else {
+    for (let i = 0; i < arrPair.length; i++) {
+      if (arrPair[i][0] === arrPair[i][1]) {
+        for (let p = 0; p < arrPoker.length; p++)
+          if (arrPoker[p] === arrPair[i][0]) {
+            if (index < p) {
+              index = p
+              winningCards = arrPair[i]
+            }
+          }
+      }
+    }
+    if (index > 0) {
+      return winningCards
+    } else return []
   }
 }
+
+console.log(winningPairFromArray([['Q', 'Q'], ['9', '9']]))
 
 function winning3CardHand() {}
 
