@@ -29,15 +29,13 @@ function winningPair(firstPair, secondPair) {
   if (!isBothEqual(firstPair) && !isBothEqual(secondPair)) return []
 
   if (isBothEqual(firstPair)) {
-    const firstValue = calculateCardsValue(firstPair)
-
     if (isBothEqual(secondPair)) {
+      const firstValue = calculateCardsValue(firstPair)
       const secondValue = calculateCardsValue(secondPair)
       if (secondValue > firstValue) return secondPair
     }
     return firstPair
   }
-
   return secondPair
 }
 
