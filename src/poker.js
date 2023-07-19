@@ -16,7 +16,9 @@ const cardsValues = {
 }
 
 function isPair(array) {
-  return array[0] === array[1]
+  const pom = Array.from(array)
+  pom.sort().reverse()
+  return pom[0] === pom[1]
 }
 
 function isThree(array) {
