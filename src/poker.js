@@ -19,6 +19,10 @@ function isPair(array) {
   return array[0] === array[1]
 }
 
+function isThree(array) {
+  return array[0] === array[1] && array[1] === array[2]
+}
+
 function winningPair(array1, array2) {
   let result = []
   if (isPair(array1)) result = array1
@@ -28,7 +32,26 @@ function winningPair(array1, array2) {
   return result
 }
 
+function winningThree(array1, array2) {
+  let result = []
+  if (isThree(array1)) result = array1
+  if (isThree(array2)) result = array2
+  if (isThree(array1) && isThree(array2))
+    result = cardsValues[array1[0]] > cardsValues[array2[0]] ? array1 : array2
+  return result
+}
 // Extension criteria
+
+function winning3CardHand(array) {
+  let win = []
+  let hadThree = false
+  for (let i = 0; i < array.length; i++) {
+    if (isThree(array[i])) hadThree = true
+    if (hadThree) win = winningThree(array[i], win)
+    else win = winningPair(array[i], win)
+  }
+  return win
+}
 
 function winningPairFromArray(array) {
   let win = []
@@ -37,8 +60,6 @@ function winningPairFromArray(array) {
   }
   return win
 }
-
-function winning3CardHand() {}
 
 module.exports = {
   winningPair,
