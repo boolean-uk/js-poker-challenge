@@ -64,11 +64,11 @@ const isHigherTriple = (cards1, cards2, cards3) => {
 function winningTriple(triple1, triple2, triple3) {
   if (areThreeCardsIdentical(triple1) && areThreeCardsIdentical(triple2)) {
     return isHigherTriple(triple1, triple2, triple3)
-  } else if (OneIsPair(triple1)) {
+  } else if (areThreeCardsIdentical(triple1)) {
     return triple1
-  } else if (OneIsPair(triple2)) {
+  } else if (areThreeCardsIdentical(triple2)) {
     return triple2
-  } else if (OneIsPair(triple3)) {
+  } else if (areThreeCardsIdentical(triple3)) {
     return triple3
   } else {
     return [];
