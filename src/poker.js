@@ -15,13 +15,17 @@ const cardValue = (card) => {
 }
 
 const validatePair = (pair) => {
-  if (pair.length !== 2 || isCard(pair[0]) || isCard(pair[1])) {
+  if (pair.length !== 2 || !isCard(pair[0]) || !isCard(pair[1])) {
     throw new Error(`Invalid pair: ${pair}`)
   }
 }
 
 const isPair = (pair) => {
-  validatePair(pair)
+  try {
+    validatePair(pair)
+  } catch (veryGoodPractice) {
+    return false
+  }
   const [c1, c2] = pair
   return c1 === c2
 }
@@ -46,7 +50,11 @@ function winningPair(pair1, pair2) {
 
 // Extension criteria
 
-function winningPairFromArray() {}
+function winningPairFromArray(pairs) {
+  const filtered = pairs.filter(isPair)
+  const maxPoints = Math.max(...filtered.map(pairValue))
+  return filtered.filter((p) => pairValue(p) === maxPoints)[0] || []
+}
 
 function winning3CardHand() {}
 
