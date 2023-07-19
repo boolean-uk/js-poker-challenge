@@ -56,7 +56,48 @@ function winningPairFromArray(pairs) {
   return filtered.filter((p) => pairValue(p) === maxPoints)[0] || []
 }
 
-function winning3CardHand() {}
+// it("should return ['7', '7', '7'] for [['5', '5', '3'], ['A', 'A'], ['7', '7', '7'], ['Q', 'J', '9']]", () => {
+//   const result = winning3CardHand([
+//     ['5', '5', '3'],
+//     ['A', 'A'],
+//     ['7', '7', '7'],
+//     ['Q', 'J', '9']
+//   ])
+
+const validateTriple = (triple) => {
+  if (triple.length !== 3 || !isCard(triple[0]) || !isCard(triple[1]) || !isCard(triple[2])) {
+    throw new Error(`Invalid triple: ${triple}`)
+  }
+}
+
+const isTriple = (triple) => {
+  try {
+    validateTriple(triple)
+  } catch (veryGoodPractice) {
+    return false
+  }
+  const [c1, c2, c3] = triple
+  return c1 === c2 && c2 === c3
+}
+
+const tripleValue = (triple) => {
+  validateTriple(triple)
+  const [c1, c2, c3] = triple
+  return cardValue(c1) + cardValue(c2) + cardValue(c3)
+}
+
+function winning3CardHand(triples) {
+  const filteredTriples = triples.filter(isTriple)
+  const filteredPairs = triples.filter(isPair)
+  const maxTriplePoints = Math.max(...filteredTriples.map(tripleValue))
+  const maxPairPoints = Math.max(...filteredPairs.map(pairValue))
+
+  const winningTriple = filteredTriples.filter((t) => tripleValue(t) === maxTriplePoints)[0] || []
+  const winningPair = filteredPairs.filter((p) => pairValue(p) === maxPairPoints)[0] || []
+
+  return winningTriple.length > 0 ? winningTriple : winningPair
+
+}
 
 module.exports = {
   winningPair,
