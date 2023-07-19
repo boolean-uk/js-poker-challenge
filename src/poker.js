@@ -47,54 +47,40 @@ function winningPairFromArray(hands) {
 }
 
 function winning3CardHand(hands) {
-  const quantifier = 100
   let maxScore = 0
-  let winningHand = []
+  let winningPair = []
+
   for (const hand of hands) {
-    const repCards = repeatedCards(hand)
-    if (repCards.length > 0) {
-      const handScore =
-        repCards.length === 3
-          ? cardValues[repCards[0]] + quantifier
-          : cardValues[repCards[0]]
-      if (handScore > maxScore) {
-        maxScore = handScore
-        winningHand = hand
-      }
+    const handScore = checkIfIsWinningPair(hand)
+    if (handScore > maxScore) {
+      maxScore = handScore
+      winningPair = hand
     }
   }
-  return winningHand
+
+  return winningPair
 }
 
-function repeatedCards(hand) {
-  if (hand[0] === hand[1] && hand[0] === hand[2]) {
-    return hand
-  } else if (hand[0] === hand[1]) {
-    return [hand[0], hand[1]]
-  } else if (hand[1] === hand[2]) {
-    return [hand[1], hand[2]]
-  } else if (hand[0] === hand[2]) {
-    return [hand[0], hand[2]]
+function checkIfIsWinningPair(hand) {
+  const bonusForTrippleCard = 100
+  const counter = hand.reduce(function (counter, element) {
+    counter[element] = (counter[element] || 0) + 1
+    return counter
+  }, {})
+
+  const maxReps = Math.max(...Object.values(counter))
+  const maxCard = Object.keys(counter).find(function (key) {
+    return counter[key] === maxReps
+  })
+  
+  if (maxReps > 2){
+    return cardValues[maxCard] + bonusForTrippleCard
   }
-  return []
+  else if (maxReps > 1){
+    return cardValues[maxCard]
+  }
+  else return 0
 }
-
-// function checkIfIsWinningPair(hand) {
-//   const counter = hand.reduce(function (counter, element) {
-//     counter[element] = (counter[element] || 0) + 1
-//     return counter
-//   }, {})
-
-//   const maxReps = Math.max(...Object.values(counter))
-//   const maxCard = Object.keys(counter).find(function (key) {
-//     return counter[key] === maxReps
-//   })
-
-//   if (reps > 1) return { card: maxCard, reps: maxReps }
-// }
-
-// console.log(repeatedCards(['K', 7, 7]))
-// console.log(checkIfIsWinningPair(['K', 'K', 5]))
 
 module.exports = {
   winningPair,
