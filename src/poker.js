@@ -69,17 +69,13 @@ function checkIfIsWinningPair(hand) {
   }, {})
 
   const maxReps = Math.max(...Object.values(counter))
-  const maxCard = Object.keys(counter).find(function (key) {
-    return counter[key] === maxReps
-  })
-  
-  if (maxReps > 2){
+  const maxCard = Object.keys(counter).find((key) => counter[key] === maxReps)
+
+  if (maxReps > 2) {
     return cardValues[maxCard] + bonusForTrippleCard
-  }
-  else if (maxReps > 1){
+  } else if (maxReps > 1) {
     return cardValues[maxCard]
-  }
-  else return 0
+  } else return 0
 }
 
 module.exports = {
