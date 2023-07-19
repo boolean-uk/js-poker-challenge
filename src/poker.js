@@ -15,27 +15,24 @@ const arrPoker = [
 ]
 
 function winningPair(pair1, pair2) {
-  if (pair1[0] === pair1[1] && pair2[0] === pair2[1]) {
-    let index1 = 0
-    let index2 = 0
+  let winningCards = []
+  if (isIdentical(pair1) || isIdentical(pair2)) {
+    let index = -1
     for (let i = 0; i < arrPoker.length; i++) {
-      if (arrPoker[i] === pair1[0]) {
-        index1 = i
+      if (arrPoker[i] === pair1[0] && index < i) {
+        index = i
+        winningCards = pair1
       }
-      if (arrPoker[i] === pair2[0]) {
-        index2 = i
+      if (arrPoker[i] === pair2[0] && index < i) {
+        index = i
+        winningCards = pair2
       }
     }
-    if (index1 < index2) {
-      return pair2
-    } else return pair1
-  } else if (pair1[0] !== pair1[1] && pair2[0] !== pair2[1]) {
-    return []
-  } else if (pair1[0] !== pair1[1] || pair2[0] !== pair2[1]) {
-    if (pair1[0] !== pair1[1]) return pair2
-    else return pair1
   }
+  return winningCards
 }
+
+console.log(winningPair(['J', 'Q'], ['3', '7']))
 
 // Extension criteria
 
@@ -46,7 +43,7 @@ function winningPairFromArray(arrPair) {
     return winningPair(arrPair[0], arrPair[1])
   } else {
     for (let i = 0; i < arrPair.length; i++) {
-      if (arrPair[i][0] === arrPair[i][1]) {
+      if (isIdentical(arrPair[i])) {
         for (let p = 0; p < arrPoker.length; p++)
           if (arrPoker[p] === arrPair[i][0]) {
             if (index < p) {
@@ -62,9 +59,41 @@ function winningPairFromArray(arrPair) {
   }
 }
 
-console.log(winningPairFromArray([['Q', 'Q'], ['9', '9']]))
+function winning3CardHand(arrPair) {
+  let index = -1
+  let winningCards = []
+  if (
+    arrPair.length === 2 &&
+    arrPair[0].length === 2 &&
+    arrPair[1].length === 2
+  ) {
+    return winningPair(arrPair[0], arrPair[1])
+  } else {
+    for (let i = 0; i < arrPair.length; i++) {
+      for (let pair = 0; pair < arrPair[i].length; pair++) {
+        if (isIdentical(arrPair[i])) {
+          for (let p = 0; p < arrPoker.length; p++)
+            if (arrPoker[p] === arrPair[i][pair][0]) {
+              if (index < p || winningCards.length < arrPair[i].length) {
+                index = p
+                winningCards = arrPair[i]
+              }
+            }
+        }
+      }
+    }
+    return winningCards
+  }
+}
 
-function winning3CardHand() {}
+function isIdentical(arr) {
+  for (let i = 0; i < arr.length - 1; i++) {
+    if (arr[i] !== arr[i + 1]) {
+      return false
+    }
+  }
+  return true
+}
 
 module.exports = {
   winningPair,
