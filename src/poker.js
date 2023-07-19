@@ -27,7 +27,23 @@ function winningPair(pairOne, pairTwo) {
 
 // Extension criteria
 
-function winningPairFromArray() {}
+function winningPairFromArray(pairArray) {
+  const resultArray = []
+
+  for (const i in pairArray) {
+    if (pairArray[i][0] === pairArray[i][1]) resultArray.push(pairArray[i][0])
+  }
+
+  if (resultArray.length === 0) return []
+
+  let highestString = '3'
+  for (const i in resultArray) {
+    if (cardMap[resultArray[i]] > cardMap[highestString])
+      highestString = resultArray[i]
+  }
+
+  return [highestString, highestString]
+}
 
 function winning3CardHand() {}
 
