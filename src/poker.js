@@ -1,4 +1,4 @@
-function calculatePairValue(arr) {
+function calculateCardsValue(cards) {
   const cardValues = {
     2: 2,
     3: 3,
@@ -14,18 +14,25 @@ function calculatePairValue(arr) {
     K: 13,
     A: 14
   }
-  return arr.reduce((sum, card) => sum + cardValues[card], 0)
+  return cards.reduce((sum, card) => sum + cardValues[card], 0)
+}
+
+function isBothEqual(twoCards) {
+  return (
+    Array.isArray(twoCards) &&
+    twoCards.length === 2 &&
+    twoCards[0] === twoCards[1]
+  )
 }
 
 function winningPair(firstPair, secondPair) {
-  if (firstPair[0] !== firstPair[1] && secondPair[0] !== secondPair[1])
-    return []
+  if (!isBothEqual(firstPair) && !isBothEqual(secondPair)) return []
 
-  if (firstPair[0] === firstPair[1]) {
-    const firstValue = calculatePairValue(firstPair)
+  if (isBothEqual(firstPair)) {
+    const firstValue = calculateCardsValue(firstPair)
 
-    if (secondPair[0] === secondPair[1]) {
-      const secondValue = calculatePairValue(secondPair)
+    if (isBothEqual(secondPair)) {
+      const secondValue = calculateCardsValue(secondPair)
       if (secondValue > firstValue) return secondPair
     }
     return firstPair
@@ -36,9 +43,58 @@ function winningPair(firstPair, secondPair) {
 
 // Extension criteria
 
-function winningPairFromArray() {}
+function winningPairFromArray(pokerHand) {
+  const winningPair = {
+    score: 0,
+    set: []
+  }
 
-function winning3CardHand() {}
+  for (const pair of pokerHand) {
+    if (isBothEqual(pair)) {
+      const pairScore = calculateCardsValue(pair)
+      if (pairScore > winningPair.score) {
+        winningPair.score = pairScore
+        winningPair.set = pair
+      }
+    }
+  }
+  return winningPair.set
+}
+
+function isThreeEqual(threeCards) {
+  return (
+    Array.isArray(threeCards) &&
+    threeCards.length === 3 &&
+    threeCards[0] === threeCards[1] &&
+    threeCards[1] === threeCards[2]
+  )
+}
+
+function winning3CardHand(pokerHand) {
+  const winningHand = {
+    score: 0,
+    set: []
+  }
+
+  for (const cards of pokerHand) {
+    if (isThreeEqual(cards)) {
+      const tripleScore = calculateCardsValue(cards)
+      if (winningHand.set.length !== 3 || tripleScore > winningHand.score) {
+        winningHand.score = tripleScore
+        winningHand.set = cards
+      }
+    }
+    if (isBothEqual(cards)) {
+      const pairScore = calculateCardsValue(cards)
+      if (pairScore > winningHand.score && winningHand.set.length !== 3) {
+        winningHand.score = pairScore
+        winningHand.set = cards
+      }
+    }
+  }
+
+  return winningHand.set
+}
 
 module.exports = {
   winningPair,
