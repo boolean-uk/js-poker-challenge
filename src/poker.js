@@ -1,4 +1,5 @@
 const cardsValues = {
+  undefined: 0,
   2: 2,
   3: 3,
   4: 4,
@@ -29,7 +30,13 @@ function winningPair(array1, array2) {
 
 // Extension criteria
 
-function winningPairFromArray() {}
+function winningPairFromArray(array) {
+  let win = []
+  for (let i = 0; i < array.length; i++) {
+    win = winningPair(array[i], win)
+  }
+  return win
+}
 
 function winning3CardHand() {}
 
