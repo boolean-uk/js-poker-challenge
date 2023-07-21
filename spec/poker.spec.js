@@ -1,4 +1,4 @@
-const { winningPair } = require('../src/poker')
+const { winningPair, getCardValue } = require('../src/poker')
 
 describe('Poker', () => {
   it("should return ['A', 'A'] for ['K', '3'] and ['A', 'A']", () => {
@@ -17,5 +17,11 @@ describe('Poker', () => {
     const result = winningPair(['9', '9'], ['7', '7'])
 
     expect(result).toEqual(['9', '9'])
+  })
+
+  it("should return '14' for 'A'", () => {
+    const result = getCardValue('A')
+
+    expect(result).toEqual('14')
   })
 })

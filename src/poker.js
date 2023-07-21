@@ -1,76 +1,83 @@
-const convertValues = {
+const cardValue = {
   J: '11',
   Q: '12',
   K: '13',
   A: '14'
 }
-const convertArray = (hand) =>
-  hand.map((card) => Number(convertValues[card] || card))
-  
-function isPair (hand){
-  return hand[0]===hand[1]
+
+function getCardValue(card) {
+  return cardValue[card] || card
 }
 
-function winningPair(hand1, hand2) {
-  const hand1Converted = convertArray(hand1)
-  const hand2Converted = convertArray(hand2)
-  //Both hands have pair
-  if (isPair(hand1)&&isPair(hand2)){
-      return hand1Converted > hand2Converted ? hand1 : hand2 
+function isPair(pair) {
+  return pair.length === 2 && getCardValue(pair[0]) === getCardValue(pair[1])
+}
+
+function getHandValue(pair) {
+  return parseInt(getCardValue(pair[0]))
+}
+
+function winningPair(pair1, pair2) {
+  if (isPair(pair1) && isPair(pair2)) {
+    return getHandValue(pair1) < getHandValue(pair2) ? pair2 : pair1
+  } else if (isPair(pair1) || isPair(pair2)) {
+    return isPair(pair1) ? pair1 : pair2
+  } else {
+    return []
   }
-  //Hand 1 has pair
-  if (isPair(hand1)&&!isPair(hand2)){
-    return hand1
-  }
-  //Hand 2 has pair
-  if (isPair(hand2)&&!isPair(hand1)){
-    return hand2
-  }
-  else return []
 }
 
 // Extension criteria
 
-function winningPairFromArray(array) {
-  let win = []
-  for (let i = 0; i < array.length; i++) {
-    win = winningPair(array[i], win)
-  }
-  return win
-}
-
-
-function winning3CardHand(array) {
-  const doubles = locateDoubles(array)
-  const triples = locateTriples(array)
-
-  if (triples.length === 0 && doubles.length === 0) return []
-
-  let winningNumber = 0
-  let winningCards
-
-  const findWinningCards = (cards) => {
-    const cardsNum = convertArray(cards)
-
-    if (winningNumber < cardsNum[0]) {
-      winningNumber = cardsNum[0]
-      winningCards = cards
-    }
+function winningPairFromArray(pairs) {
+  if (pairs.length === 0) {
+    return []
   }
 
-  triples.forEach(findWinningCards)
-  if (winningNumber === 0) 
-    doubles.forEach(findWinningCards)
+  let bestPair = []
 
-  return winningCards
+  for (let i = 0; i < pairs.length; i++) {
+    bestPair = winningPair(bestPair, pairs[i])
+  }
+
+  return bestPair
 }
 
-const locateDoubles = (array) => array.filter((cards) => cards[0] === cards[1] && cards.length === 2)
+function isHandATriple(hand) {
+  const value = getCardValue(hand[0])
+  return (
+    hand.length === 3 &&
+    getCardValue(hand[1]) === value &&
+    getCardValue(hand[2]) === value
+  )
+}
 
-const locateTriples = (array) => array.filter((cards) => cards[0] === cards[1] && cards[0] === cards[2])
+function winningHand(hand1, hand2) {
+  if (isHandATriple(hand1) && isHandATriple(hand2)) {
+    return getHandValue(hand1) < getHandValue(hand2) ? hand2 : hand1
+  } else if (isHandATriple(hand1) || isHandATriple(hand2)) {
+    return isHandATriple(hand1) ? hand1 : hand2
+  } else {
+    return winningPair(hand1, hand2)
+  }
+}
 
+function winning3CardHand(cardGroups) {
+  if (cardGroups.length === 0) {
+    return []
+  }
+
+  let bestHand = []
+
+  for (let i = 0; i < cardGroups.length; i++) {
+    bestHand = winningHand(bestHand, cardGroups[i])
+  }
+
+  return bestHand
+}
 
 module.exports = {
+  getCardValue,
   winningPair,
   winningPairFromArray,
   winning3CardHand
