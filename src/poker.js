@@ -9,12 +9,12 @@ function getCardValue(card) {
   return cardValue[card] || card
 }
 
-function isPair(pair) {
-  return pair.length === 2 && getCardValue(pair[0]) === getCardValue(pair[1])
+function isPair(hand) {
+  return hand.length === 2 && getCardValue(hand[0]) === getCardValue(hand[1])
 }
 
-function getHandValue(pair) {
-  return parseInt(getCardValue(pair[0]))
+function getHandValue(hand) {
+  return parseInt(getCardValue(hand[0]))
 }
 
 function winningPair(pair1, pair2) {
@@ -62,15 +62,15 @@ function winningHand(hand1, hand2) {
   }
 }
 
-function winning3CardHand(cardGroups) {
-  if (cardGroups.length === 0) {
+function winning3CardHand(hands) {
+  if (hands.length === 0) {
     return []
   }
 
   let bestHand = []
 
-  for (let i = 0; i < cardGroups.length; i++) {
-    bestHand = winningHand(bestHand, cardGroups[i])
+  for (let i = 0; i < hands.length; i++) {
+    bestHand = winningHand(bestHand, hands[i])
   }
 
   return bestHand
