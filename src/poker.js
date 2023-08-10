@@ -69,9 +69,6 @@ function winning3CardHand(arrayOfHands) {
       ) {
         winningPair = hand
       }
-      // if (compareCards(hand[0], winningPair[0]) > 0) {
-      //   winningPair = hand
-      // }
     } else if (isPair(hand)) {
       if (foundThreeOfaKind) {
         continue
