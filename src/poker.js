@@ -18,6 +18,10 @@ function symbolNumber(symbol) {
   }
 }
 
+function is3Card(hand) {
+  return hand[0] === hand[1] && hand[0] === hand[2]
+}
+
 function winningPair(pair1, pair2) {
   const isPair1 = isPair(pair1)
   const isPair2 = isPair(pair2)
@@ -59,7 +63,42 @@ function winningPairFromArray(pairs) {
   return pairs[winningIndex]
 }
 
-function winning3CardHand() {}
+function winning3CardHand(pairs) {
+  // keep track of max pair and max 3card as well
+  let winningIndex2 = -1
+  let maxNum2 = 0
+  let winningIndex3 = -1
+  let maxNum3 = 0
+
+  for (let i = 0; i < pairs.length; ++i) {
+    const item = pairs[i]
+    if (item.length === 3) {
+      if (is3Card(item)) {
+        const num = symbolNumber(item[0])
+        if (num > maxNum3) {
+          maxNum3 = num
+          winningIndex3 = i
+        }
+      }
+    } else {
+      if (isPair(item)) {
+        const num = symbolNumber(item[0])
+        if (num > maxNum2) {
+          maxNum2 = num
+          winningIndex2 = i
+        }
+      }
+    }
+  }
+
+  if (winningIndex3 !== -1) {
+    return pairs[winningIndex3]
+  }
+  if (winningIndex2 !== -1) {
+    return pairs[winningIndex2]
+  }
+  return []
+}
 
 module.exports = {
   winningPair,
