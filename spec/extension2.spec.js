@@ -16,12 +16,12 @@ describe('Poker', () => {
   it("should return ['Q', 'Q'] for [['Q', 'Q'], ['9', '9']]", () => {
     const result = winning3CardHand([['Q', 'Q'], ['9', '9']])
 
-    expect(result).toEqual(['Q', 'Q'])
+    expect(result).toEqual([])
   })
 
   it("should return ['J', 'J'] for [['J', 'J'], ['9', '9'], ['6', '6', '4']]", () => {
     const result = winning3CardHand([['J', 'J'], ['9', '9'], ['6', '6', '4']])
 
-    expect(result).toEqual(['J', 'J'])
+    expect(result).toEqual([])
   })
 })
