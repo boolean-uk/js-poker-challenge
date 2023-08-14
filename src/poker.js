@@ -1,10 +1,14 @@
 /* eslint-disable prettier/prettier */
 function winningPair(pair1, pair2) {
-  if (pair1[0] === pair1[1] && pair2[0] !== pair2[1]) {
+
+  const hand1IsPair = pair1[0] === pair1[1]
+  const hand2IsPair = pair2[0] === pair2[1]
+
+  if (hand1IsPair && !hand2IsPair) {
     return pair1
-  } else if (pair2[0] === pair2[1] && pair1[0] !== pair1[1]) {
+  } else if (hand2IsPair && !hand1IsPair) {
     return pair2
-  } else if (pair2[0] === pair2[1] && pair1[0] === pair1[1]) {
+  } else if (hand1IsPair && hand2IsPair) {
     if (pair1[0] === 'A') {
       return pair1
     }
