@@ -47,13 +47,13 @@ function matchCheck(card1, card2, card3) {
   }
 
   if (card1 === card2 && card2 === card3) {
-    handValue = cardValues[card1] + cardValues[card2] + cardValues[card3] + 1000
+    handValue = cardValues[card1] + cardValues[card2] + cardValues[card3] + 100
   } else if (card1 === card2) {
-    handValue = cardValues[card1] + cardValues[card2] + 100
+    handValue = cardValues[card1] + cardValues[card2]
   } else if (card2 === card3) {
-    handValue = cardValues[card2] + cardValues[card3] + 100
+    handValue = cardValues[card2] + cardValues[card3]
   } else if (card1 === card3) {
-    handValue = cardValues[card2] + cardValues[card3] + 100
+    handValue = cardValues[card2] + cardValues[card3]
   }
   return handValue
 }
