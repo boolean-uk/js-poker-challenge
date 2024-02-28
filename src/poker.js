@@ -1,17 +1,6 @@
 const cardScores = {
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 7,
-  8: 8,
-  9: 9,
-  10: 10,
-  J: 11,
-  Q: 12,
-  K: 13,
-  A: 14,
+  2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7,
+  8: 8, 9: 9, 10: 10, J: 11, Q: 12, K: 13, A: 14,
 }
 
 const scoreCalculator = (pair1, pair2) => {
@@ -93,29 +82,29 @@ const determineIfPairsExist = (arr) => {
 // Extension 2 criteria
 
 const winning3CardHand = (arr) => {
-  let twoCardHandArr = getTwoCardHands(arr)
-  let threeCardHandArr = getThreeCardHands(arr)
-  let pairsArray = findAllPairHands(twoCardHandArr, threeCardHandArr)
-  let tripsArray = findAllTripHands(threeCardHandArr)
+  let twoCardHands = getTwoCardHands(arr)
+  let threeCardHands = getThreeCardHands(arr)
+  let allPairsArray = findAllPairHands(twoCardHands, threeCardHands)
+  let allTripsArray = findAllTripHands(threeCardHands)
 
-  if (tripsArray.length > 0) {  // If there are trips, they will beat any other hand. This finds the winner of all the trips (if any trips exist).
-    let tripsScoredArr = scoreArr(tripsArray)
+  if (allTripsArray.length > 0) {  // If there are trips, they will beat any other hand. This finds the winner of all the trips.
+    let tripsScoredArr = scoreArr(allTripsArray)
     let tripsHighScoreIndex = getHighestScoreIndex(tripsScoredArr)
-    return(tripsArray[tripsHighScoreIndex])
+    return(allTripsArray[tripsHighScoreIndex])
   }
 
-  if (pairsArray.length > 0) { // There aren't any trips, so we'll check the pairs next, but first we need to remove the superfluous third card in order to score them
-    let pairsArray3rdRemoved = remove3rdNo(pairsArray)
+  if (allPairsArray.length > 0) { // There aren't any trips, so we'll check the pairs next, but first we need to remove the superfluous third card from three-card hands with pairs.
+    let pairsArray3rdRemoved = remove3rdCard(allPairsArray)
     let pairsScoredArr = scoreArr(pairsArray3rdRemoved)
     let pairsHighScoreIndex = getHighestScoreIndex(pairsScoredArr)
-    return (pairsArray[pairsHighScoreIndex])
+    return (allPairsArray[pairsHighScoreIndex])
 
   } else { // no pairs, no trips, no winners!
     return [] 
   }
 }
 
-const remove3rdNo = (arr) => {
+const remove3rdCard = (arr) => {
   let newArr = []
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].length === 2) {

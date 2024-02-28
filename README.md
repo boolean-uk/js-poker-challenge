@@ -70,5 +70,16 @@ winning3CardHand([['5', '5', '3'], ['7', '7', '7']]) // => ['7', '7', '7']
 winning3CardHand([['J', 'J'], ['9', '9'], ['6', '6', '4']]) // => ['J', 'J']
 ```
 
+Things to remember:
+- Any 3 of a kind beats any pair
+- Can we sort them into different arrays? A 3 of a kind array and a pair array? IF 3 of a kind array.length > 1, we find the winner there. If not, does pair array have anything? If so, find the winner there. If not, return []
+
+First, sort the hadns into 2 arrays:
+array 1: 3-card hands
+array 2: 2-card hands
+
+Second, sort them into trips arrays, and pairs arrays
+
+
 ### Concise Code
 Split up your functions in to multiple smaller functions that do one thing only. Read this [article on Clean Functions](https://github.com/ryanmcdermott/clean-code-javascript#functions) and apply the principles you think are relevant.
