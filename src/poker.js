@@ -62,10 +62,10 @@ let scoredArr = scorePairsInNewArr(rawArr)
 let winningIndex = getHighestScoreIndex(scoredArr)
 let noPairs = determineIfPairsExist(scoredArr)
 
-  if (noPairs) {
+  if (noPairs) { //No winner, so return nothing
     return []
   } else {
-    return rawArr[winningIndex]
+    return rawArr[winningIndex] //Determines the best of the pairs
   }
 }
 
@@ -98,10 +98,10 @@ const winning3CardHand = (arr) => {
   let pairsArray = findAllPairHands(twoCardHandArr, threeCardHandArr)
   let tripsArray = findAllTripHands(threeCardHandArr)
 
-  if (tripsArray.length > 0) {  // If there are trips, they will beat any other hand. This finds the winner of all trips.
-  let tripsScoredArr = scoreArr(tripsArray)
-  let tripsHighScoreIndex = getHighestScoreIndex(tripsScoredArr)
-  return(tripsArray[tripsHighScoreIndex])
+  if (tripsArray.length > 0) {  // If there are trips, they will beat any other hand. This finds the winner of all the trips (if any trips exist).
+    let tripsScoredArr = scoreArr(tripsArray)
+    let tripsHighScoreIndex = getHighestScoreIndex(tripsScoredArr)
+    return(tripsArray[tripsHighScoreIndex])
   }
 
   if (pairsArray.length > 0) { // There aren't any trips, so we'll check the pairs next, but first we need to remove the superfluous third card in order to score them
@@ -109,8 +109,9 @@ const winning3CardHand = (arr) => {
     let pairsScoredArr = scoreArr(pairsArray3rdRemoved)
     let pairsHighScoreIndex = getHighestScoreIndex(pairsScoredArr)
     return (pairsArray[pairsHighScoreIndex])
-  } else {
-    return [] // no pairs, no trips, just stinky cards, so no winner.
+
+  } else { // no pairs, no trips, no winners!
+    return [] 
   }
 }
 
@@ -195,9 +196,6 @@ const getThreeCardHands = (arr) => {
   }
   return newArr
 }
-
-console.log(winning3CardHand([['5', '5', '3'], ['A', 'A'], ['7', '7', '7'], ['Q', 'J', '9']]))
-
 
 module.exports = {
   winningPair,
